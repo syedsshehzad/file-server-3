@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Stripe</title>
+	<style>
+		div {
+			border: dashed 1px #aaaaaa;
+		}
+		h2 {
+			text-decoration: underline;
+		}
+	</style>
+</head>
+<body>
+	<h1>Enter your email address</h1>
+
+	<form action="/login" method="post">
+		<fieldset name="Enter Email" label="email">
+			<legend>Email</legend>
+			<input type="text" name="email" label="email">
+			<button>Submit</button>
+		</fieldset>
+	</form>
+
+	<br>
+
+	<div>
+		<h2>Click below to download:</h2>
+		<ol></ol>
+	</div>
+
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script>
+		$('button').click(function(e) {
+			e.preventDefault();
+			$('li').remove();
+			$.post('/login', {email: $('input').val().trim()} ).then(function(data) {
+				console.log(data)
+				data.items.forEach(function(item) {
+					$('ol').append(`<li><a href="zippedFiles/${item.productName}.zip">${item.productName}</a></li>`)
+				})
+			})
+			
+		})
+	</script>
+</body>
+</html>
