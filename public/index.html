@@ -14,7 +14,7 @@
 <body>
 	<h1>Enter your email address</h1>
 
-	<form action="/login" method="post">
+	<form>
 		<fieldset name="Enter Email" label="email">
 			<legend>Email</legend>
 			<input type="text" name="email" label="email">
@@ -34,14 +34,18 @@
 		$('button').click(function(e) {
 			e.preventDefault();
 			$('li').remove();
+			$('p').remove();
 			$.post('/login', {email: $('input').val().trim()} ).then(function(data) {
-				console.log(data)
-				data.items.forEach(function(item) {
-					$('ol').append(`<li><a href="zippedFiles/${item.productName}.zip">${item.productName}</a></li>`)
-				})
-			})
-			
-		})
+				console.log(data);	
+				if (data.items) {
+					data.items.forEach(function(item) {
+						$('ol').append(`<li><a href="zippedFiles/${item.productName}.zip">${item.productName}</a></li>`);
+					});
+				} else {
+					$('div').append('<p>' + data + '</p>');
+				}
+			});
+		});
 	</script>
 </body>
 </html>
