@@ -25,7 +25,7 @@ app.set("view engine", "handlebars");
 
 
 app.get('/', (req, res) => {
-	res.sendFile('index.html', err => {if (err) throw err})
+	res.sendFilndex.html', err => {if (err) throw err})
 });
 
 app.post('/', (req, res) => {
