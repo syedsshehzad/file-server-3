@@ -36,8 +36,8 @@ app.get('/', (req, res) => {
 app.post('/create', (req, res) => {
 	console.log("****************************REQ********************");
 	console.log(req)
-	console.log("*************************REQ.BODY******************");
-	console.log(req.body);
+	console.log("*************************RES.REQ.BODY******************");
+	console.log(res.request.body);
 	console.log("**************************REQ.JSON*****************");
 	console.log(req.json);
 	let items = req.json.items;
