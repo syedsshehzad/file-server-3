@@ -35,9 +35,11 @@ app.get('/', (req, res) => {
 
 app.post('/create', (req, res) => {
 	console.log("****************************REQ.BODY********************");
-	console.log(req.body)
-	let items = req.body.items;
-	let customer = req.body.email;
+	console.log(req.body[0]);
+	console.log("****************************LENGTH**********************");
+	console.log(req.body.length);
+	let items = req.body[0].items;
+	let customer = req.body[0].email;
 
 	items.forEach(function(item) {
 		let product = item.name;
