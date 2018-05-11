@@ -34,15 +34,20 @@ app.get('/', (req, res) => {
 });
 
 app.post('/create', (req, res) => {
-	console.log("****************************REQ.BODY********************");
+	console.log("****************************REQ.BODY[0]********************");
 	console.log(req.body[0]);
 	console.log("****************************LENGTH**********************");
-	console.log(req.body.length);
-	let items = req.body[0].items;
-	let customer = req.body[0].email;
+	let length = req.body.length;
+	console.log(length);
+	console.log("****************************REQ.BODY[last]*****************");
+	console.log(req.body[length-1]);
+	let items = req.body[length-1].items;
+	let customer = req.body[length-1].email;
 
 	items.forEach(function(item) {
-		let product = item.name;
+		let product = item.name.toUpperCase();
+		console.log("*******************PRODUCT****************");
+		console.log(product);
 
 		db.Customer.find({customerName: customer})
 			.then(function(cust) {
