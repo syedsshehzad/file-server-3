@@ -44,51 +44,56 @@ app.post('/create', (req, res) => {
 	let items = req.body[length-1].items;
 	let customer = req.body[length-1].email;
 
-	items.forEach(function(item) {
-		let product = item.name.toUpperCase();
-		console.log("*******************PRODUCT****************");
-		console.log(product);
+	if (req.body[length-1].date_placed) {
 
-		db.Customer.find({customerName: customer})
-			.then(function(cust) {
-				console.log("CUST" + cust.length)
-				if (cust.length) {
+		items.forEach(function(item) {
+			let product = item.name.toUpperCase();
+			console.log("*******************PRODUCT****************");
+			console.log(product);
+
+			db.Customer.find({customerName: customer})
+				.then(function(cust) {
 					console.log("CUST" + cust.length)
-					console.log(cust)
-					db.Product.create({productName: product})
-					  .then(function(dbProduct) {
-					    return db.Customer.findOneAndUpdate({_id: cust[0]._id}, { $push: { items: dbProduct._id } }, { new: true });
-					  })
-					  .then(function(dbCustomer) {
-					    res.json(dbCustomer);
-					  })
-					  .catch(function(err) {
-					    res.json(err);
-					  });
-				} else if (!cust.length) {
-					db.Customer.create({customerName: customer})
-						.then(function(cust) {
-							console.log("CUST" + cust)
-							db.Product.create({productName: product})
-							  .then(function(dbProduct) {
-							    return db.Customer.findOneAndUpdate({_id: cust._id}, { $push: { items: dbProduct._id } }, { new: true });
-							  })
-							  .then(function(dbCustomer) {
-							    res.json(dbCustomer);
-							  })
-							  .catch(function(err) {
-							    res.json(err);
-							  });
-						})
-						.catch(function(err) {
-							res.json(err);
-						});
-				}
-			})
-			.catch(function(err) {
-				res.json(err);
-			});
-	})
+					if (cust.length) {
+						console.log("CUST" + cust.length)
+						console.log(cust)
+						db.Product.create({productName: product})
+						  .then(function(dbProduct) {
+						    return db.Customer.findOneAndUpdate({_id: cust[0]._id}, { $push: { items: dbProduct._id } }, { new: true });
+						  })
+						  .then(function(dbCustomer) {
+						    res.json(dbCustomer);
+						  })
+						  .catch(function(err) {
+						    res.json(err);
+						  });
+					} else if (!cust.length) {
+						db.Customer.create({customerName: customer})
+							.then(function(cust) {
+								console.log("CUST" + cust)
+								db.Product.create({productName: product})
+								  .then(function(dbProduct) {
+								    return db.Customer.findOneAndUpdate({_id: cust._id}, { $push: { items: dbProduct._id } }, { new: true });
+								  })
+								  .then(function(dbCustomer) {
+								    res.json(dbCustomer);
+								  })
+								  .catch(function(err) {
+								    res.json(err);
+								  });
+							})
+							.catch(function(err) {
+								res.json(err);
+							});
+					}
+				})
+				.catch(function(err) {
+					res.json(err);
+				});
+		})
+
+
+	}
 
 });
 
