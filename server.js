@@ -53,8 +53,9 @@ app.post('/create', (req, res) => {
 
 			db.Product.create({productName: product})
 				.then(dbProduct => {
-					db.Customer.create({customerName: customer}, { $push: { items: dbProduct._id } }, {new: true} )
+					db.Customer.create({customerName: customer})
 						.then(cust => {
+							db.Customer.findOneAndUpdate({ _id: cust._id }, { $push: { items: dbProduct._id } }, {new: true} )
 							res.json(cust);
 						})
 						.catch(err => {
