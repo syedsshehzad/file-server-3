@@ -12,7 +12,7 @@
 		body {
 			max-width: 600px;
 			margin: auto;
-			color: rgb(60, 70, 50);
+			color: rgb(70, 80, 50);
 		}
 		img {
 			height: 100px;
@@ -32,6 +32,11 @@
 		}
 		input, button {
 			padding: 5px;
+		}
+		legend {
+			background: rgb(180,200,255);
+			border-radius: 5px;
+			padding: 2px 10px;
 		}
 		@media screen and (max-width: 600px) {
 			img {
@@ -69,7 +74,7 @@
 			$('li').remove();
 			$('p').remove();
 			$.post('/login', {email: $('input').val().trim()} ).then(function(data) {
-				console.log(data);	
+				console.log(data);
 				if (data.items) {
 					data.items.forEach(function(item) {
 						$('ol').append(`<li><a href="zippedFiles/${item.productName}.zip">${item.productName}</a></li>`);
